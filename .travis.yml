@@ -1,7 +1,11 @@
-sudo: false
 language: java
-jdk:
-- oraclejdk8
-script:
-- ./gradlew build
 
+services:
+  - docker
+
+before_install:
+- docker pull adoptopenjdk/openjdk11:jdk-11.0.3.7
+
+
+script:
+- docker run --rm -it -v $TRAVIS_BUILD_DIR/spring-example:/spring-example -w /spring-example adoptopenjdk/openjdk11:jdk-11.0.3.7 ./gradlew build
